@@ -1,0 +1,5 @@
+# Project exclude paths
+/database/node_modules/
+/gateway/node_modules/
+/parser/node_modules/
+/storage/node_modules/

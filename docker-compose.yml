@@ -1,0 +1,41 @@
+version: '1'
+
+services:
+  gateway:
+    build: ./gateway
+    ports:
+      - "3000:3000"
+    environment:
+      REDIS_HOST: redis
+      REDIS_PORT: 6379
+      HOST: 0.0.0.0
+      PORT: 3000
+  storage:
+    build: ./storage
+    environment:
+      HOST: 0.0.0.0
+      PORT: 3001
+  database:
+    build: ./database
+    environment:
+      HOST: 0.0.0.0
+      PORT: 3002
+  parser:
+    build: ./parser
+    environment:
+      REDIS_HOST: redis
+      REDIS_PORT: 6379
+      HOST: 0.0.0.0
+      PORT: 3003
+  mongo:
+    image: mongo
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: admin
+      MONGO_INITDB_ROOT_PASSWORD: admin
+    volumes:
+      - /mongo/datadir:/data/db
+      - /mongo:/docker-entrypoint-initdb.d
+    ports:
+      - "27017:27017"
+  redis:
+    image: redis
